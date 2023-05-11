@@ -1,15 +1,24 @@
 #include <stdio.h>
 #include <GL/glut.h>
+#include "glm.h"
+GLMmodel * head = NULL;
+GLMmodel * body = NULL;
+GLMmodel * right_tophand = NULL;
+GLMmodel * right_lowhand = NULL;
+
 float teapotX = 0, teapotY = 0;
 FILE * fout = NULL;
 FILE * fin = NULL;
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    glPushMatrix();
-        glTranslatef(teapotX, teapotY, 0 );
-        glutSolidTeapot( 0.3 );
-    glPopMatrix();
+    if(head==NULL){
+        head = glmReadOBJ("model/head.obj");
+        body = glmReadOBJ("model/body.obj");
+        right_tophand = glmReadOBJ("model/right_tophand.obj");
+        right_lowhand = glmReadOBJ("model/right_lowhand.obj");
+
+    }
     glutSwapBuffers();
 }
 void mouse(int button, int state, int x , int y)
@@ -35,7 +44,7 @@ int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
-    glutCreateWindow("week12");
+    glutCreateWindow("week13");
 
     glutDisplayFunc(display);
     glutKeyboardFunc(keyboard);
